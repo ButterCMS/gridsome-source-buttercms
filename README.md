@@ -22,8 +22,12 @@ module.exports = {
     {
       use: "gridsome-source-buttercms",
       options: {
-        authToken: 'your_api_token',
+        authToken: 'your_api_token_here',
         // optional fields follows
+        contentFields: [],
+        pages: '',
+        pageTypes: '',
+        typeName: 'Butter'
       }
     }
   ]
