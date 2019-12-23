@@ -8,7 +8,7 @@ class ButterSource {
       contentFields: [''],
       pages: '',
       pageTypes: '',
-      typeName: ''
+      typeName: 'Butter'
     };
   }
 
@@ -18,41 +18,39 @@ class ButterSource {
     this.client = ButterCMS(options.authToken, false, 20000);
     if (!options.authToken) throw new Error('ButterSource: Missing API Key');
 
-    api.loadSource(async store => {
-      console.log('About to start loading data...');
-      await this.allButterPost(store);
-      await this.allButterCollections(store);
-      await this.allButterPages(store);
+    api.loadSource(async actions => {
+      console.log('Processing data...');
+      await this.allButterPosts(actions);
+      await this.allButterCollections(actions);
+      await this.allButterPages(actions);
     });
   }
 
     /****************************************************
     STEP ONE: Get all butter posts
   ****************************************************/
-  async allButterPost(store) {
+  async allButterPosts(actions) {
     const post = await this.client.post.list()
     const  { data } = post.data;
-    const contentType = store.addContentType({
+    const contentType = actions.addCollection({
       typeName: this.createTypeName("posts")
     });
     for (const item of data) {
       contentType.addNode({
-        fields: {
-          title: item.title,
-          url: item.url,
-          featured_image: item.featured_image,
-          slug: item.slug,
-          created: item.created,
-          published: item.published,
-          summary: item.summary,
-          seo_title: item.seo_title,
-          body: item.body,
-          meta_description: item.meta_description,
-          status: item.status,
-          author: item.author,
-          tags: item.tags,
-          categories: item.categories,
-        }
+        title: item.title,
+        url: item.url,
+        featured_image: item.featured_image,
+        slug: item.slug,
+        created: item.created,
+        published: item.published,
+        summary: item.summary,
+        seo_title: item.seo_title,
+        body: item.body,
+        meta_description: item.meta_description,
+        status: item.status,
+        author: item.author,
+        tags: item.tags,
+        categories: item.categories,
       });
     }
   }
@@ -60,60 +58,47 @@ class ButterSource {
   /****************************************************
     STEP TWO: Get all butter collections
   ****************************************************/
-  async allButterCollections(store) {
+  async allButterCollections(actions) {
     const collection = await this.client.content.retrieve(this.options.contentFields)
     const { data } = collection.data;
-    const contentType = store.addContentType({
+    const contentType = actions.addCollection({
       typeName: this.createTypeName('collection')
     });
     contentType.addNode({
-      fields: {
-        data
-      }
+      data
     })
-
   }
 
   /****************************************************
     STEP THREE: Get all butter pages
   ****************************************************/
-  async allButterPages(store) {
+  async allButterPages(actions) {
     if (this.options.pages || this.options.pageTypes) {
       if (this.options.pages) {
         const page = await this.client.page.retrieve('*', this.options.pages)
-        const { data } = page;
-        const contentType = store.addContentType({
+        const { data } = page.data;
+        const contentType = actions.addCollection({
           typeName: this.createTypeName('pages')
         });
         contentType.addNode({
-          fields: {
-            headline: data.headline,
-            seo_title: data.seo_title,
-            body: data.body,
-            hero_image: data.hero_image,
-            call_to_action: data.call_to_action,
-            customer_logos: data.customer_logos
-          }
+          slug: data.slug,
+          page_type: data.page_type,
+          data: data.fields
         })
       }
-
       if (this.options.pageTypes) {
         const page = await this.client.page.list(this.options.pageTypes)
-        const { data } = page;
-        console.log(data);
-         const contentType = store.addContentType({
+        const { data } = page.data;
+         const contentType = actions.addCollection({
           typeName: this.createTypeName('pages')
         });
-        contentType.addNode({
-          fields: {
-            headline: data.headline,
-            seo_title: data.seo_title,
-            body: data.body,
-            hero_image: data.hero_image,
-            call_to_action: data.call_to_action,
-            customer_logos: data.customer_logos
-          }
-        })
+        for (const item of data) {
+          contentType.addNode({
+            slug: item.slug,
+            page_type: item.page_type,
+            data: item.fields
+          })
+        }
       }
     }
   }
