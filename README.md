@@ -26,8 +26,7 @@ module.exports = {
         // optional fields follows
         contentFields: [],
         pages: '',
-        pageTypes: '',
-        typeName: 'Butter'
+        pageTypes: ''
       }
     }
   ]
