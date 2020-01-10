@@ -24,7 +24,7 @@ module.exports = {
       options: {
         authToken: 'your_api_token_here',
         // optional fields follows
-        contentFields: [],
+        collections: [],
         pages: '',
         pageTypes: ''
       }

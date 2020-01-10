@@ -4,8 +4,8 @@ const camelCase = require('camelcase');
 class ButterSource {
   static defaultOptions() {
     return {
-      authToken: '',
-      contentFields: [''],
+      authToken: process.env.GRIDSOME_BUTTER_AUTHTOKEN || process.env.BUTTER_AUTHTOKEN,
+      collections: [''],
       pages: '',
       pageTypes: '',
       typeName: 'Butter'
@@ -37,20 +37,7 @@ class ButterSource {
     });
     for (const item of data) {
       contentType.addNode({
-        title: item.title,
-        url: item.url,
-        featured_image: item.featured_image,
-        slug: item.slug,
-        created: item.created,
-        published: item.published,
-        summary: item.summary,
-        seo_title: item.seo_title,
-        body: item.body,
-        meta_description: item.meta_description,
-        status: item.status,
-        author: item.author,
-        tags: item.tags,
-        categories: item.categories,
+        ...item
       });
     }
   }
@@ -59,7 +46,7 @@ class ButterSource {
     STEP TWO: Get all butter collections
   ****************************************************/
   async allButterCollections(actions) {
-    const collection = await this.client.content.retrieve(this.options.contentFields)
+    const collection = await this.client.content.retrieve(this.options.collections)
     const { data } = collection.data;
     const contentType = actions.addCollection({
       typeName: this.createTypeName('collection')
