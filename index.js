@@ -76,8 +76,11 @@ class ButterSource {
       if (this.options.pageTypes) {
         const page = await this.client.page.list(this.options.pageTypes)
         const { data } = page.data;
+        const pageTypeName = data.map(pages => {
+          return pages.page_type
+        })
          const contentType = actions.addCollection({
-          typeName: this.createTypeName('pages')
+          typeName: this.createTypeName(pageTypeName[0])
         });
         for (const item of data) {
           contentType.addNode({
