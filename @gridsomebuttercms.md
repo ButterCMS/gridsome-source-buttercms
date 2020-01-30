@@ -71,16 +71,14 @@ Go to `[https://buttercms.com/](https://buttercms.com/)` and start your free acc
 
 
 
-![alt_text](images/full-gridsome0.png "image_tooltip")
+![alt_text](images/buttercms-01.png "ButterCMS welcome screen")
 
 
 Answer the questions, and next you’ll see ButterCMS’s start screen:
 
 
 
-<p id="gdcalert2" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/full-gridsome1.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-![alt_text](images/full-gridsome1.png "image_tooltip")
+![alt_text](images/buttercms-02.png  "Select a framework")
 
 
 That long string is your API Token; you’ll need it to include in the butterCMS/gridsome configuration code.
@@ -109,7 +107,7 @@ ButterCMS uses the idea of Pages as a way of organizing a given kind of data int
 
 <p id="gdcalert3" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/full-gridsome2.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert4">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
-![alt_text](images/full-gridsome2.png "image_tooltip")
+![alt_text](images/buttercms-03.png "Defining a new screen")
 
 
 So Pages let you predefine specific containers for specific kinds of data. To give you a headstart, and because the definition of a blog post is pretty well set, ButterCMS comes with one predefined Page: The BlogPost. 
@@ -123,27 +121,22 @@ Here’s what that Blog Post looks like in ButterCMS:
 
 
 
-<p id="gdcalert4" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/full-gridsome3.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert5">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-![alt_text](images/full-gridsome3.png "image_tooltip")
+![alt_text](images/buttercms-04.png "Creating a new post")
 
 
 Make sure to Publish it. You should now see it listed in Blog Posts:
 
 
-
-<p id="gdcalert5" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/full-gridsome4.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert6">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-![alt_text](images/full-gridsome4.png "image_tooltip")
+![alt_text](images/buttercms-05.png "Posts are published")
 
 
 So there are Blog Posts in ButterCMS. But there’s also - 
 
 
 
-*   Pages - Like Blog Posts, but you define what you want for each page.
-*   Collections - that typically hold small chunks of data., like detail rows in a table,
-*   Page Types - Rather than having to define each Page before you use it, you can “promote” a given page to a “Page Type”. You can pick a particular Page Type from the New Page button to generate an instance of that Page Type, or filter just for that particular Page Type as you work with all pages.
+*   **Pages** - Like Blog Posts, but you define what you want for each page.
+*   **Collections** - that typically hold small chunks of data., like detail rows in a table,
+*   **Page Types** - Rather than having to define each Page before you use it, you can “promote” a given page to a “Page Type”. You can pick a particular Page Type from the New Page button to generate an instance of that Page Type, or filter just for that particular Page Type as you work with all pages.
 
 To keep this guide straightforward, we will start by showing  a listing of your Blog Posts in Butter in our gridsome project, and then show how to add a custom Page - Meetups - to first ButterCMS and then include that Page in our Gridsome Project.
 
@@ -160,40 +153,19 @@ The key bit of code is the config code that connects your project to gridsome vi
 Add a reference to the ButterCMS module you already installed in this project:
 
 ```
-
-
-#### plugins: [
-
-
-####     {
-
-
-####     use: "gridsome-source-buttercms",
-
-
-####       options: {
-
-
-####       authToken: process.env.GRIDSOME_BUTTER_AUTHTOKEN  || process.env.BUTTER_AUTHTOKEN,
-
-
-####       // optional fields follows
-
-
-####       collections: [],
-
-
-####       pages: '',
-
-
-####       pageTypes: ''
-
-
-####     }
-
-
-####   ],
-
+module.exports = {
+  siteName: 'Gridsome',
+  plugins: [{
+    use: "gridsome-source-buttercms",
+    options: {
+      authToken: process.env.GRIDSOME_BUTTER_AUTHTOKEN  || process.env.BUTTER_AUTHTOKEN,
+      collections: [''],
+      pages: '',
+      pageTypes: ''
+    }
+  }
+  ]
+}
 ```
 
 Replace the AuthToken with your ButterCMS token. If you were putting this code into production, you’d leave this code as-is and add an environment variable named GRIDSOME_BUTTER_AUTHTOKEN. And Page Posts is baked into ButterCMS, so you don’t have to explicitly declare it in your gridsome.config.js file.
@@ -210,294 +182,111 @@ Gridsome uses components to display data, so let’s add one to display a very b
 In your components folder, create PostCard.vue with the following code:
 
 ```
-
-
-#### <template>
-
-
-####   <div class="post-card__content-box">
-
-
-####     <div class="post-card__header">
-
-
-####       <g-image
-
-
-####         alt="Cover image"
-
-
-####         v-if="post.featured_image"
-
-
-####         class="post-card__image"
-
-
-####         :src="post.featured_image"
-
-
-####       />
-
-
-####     </div>
-
-
-####     <div class="post-card__content">
-
-
-####       <h2 class="post-card__title" v-html="post.title" />
-
-
-####       <p class="post-card__description" v-html="post.summary" />
-
-
-####       <PostMeta class="post-card__meta" :post="post" />
-
-
-####     </div>
-
-
-####   </div>
-
-
-#### </template>
-
-
-#### <script>
-
-
-#### import PostMeta from "~/components/PostMeta";
-
-
-#### export default {
-
-
-####   components: {
-
-
-####     PostMeta
-
-
-####   },
-
-
-####   props: ["post"]
-
-
-#### };
-
-
-#### </script>
-
-
-#### <style lang="scss">
-
-
-#### .post-card {
-
-
-####   margin-bottom: var(--space);
-
-
-####   position: relative;
-
-
-####   &__content-box {
-
-
-####     display: flex;
-
-
-####     flex-direction: row;
-
-
-####     align-items: flex-start;
-
-
-####   }
-
-
-####   &__header {
-
-
-####     margin-left: calc(var(--space) * -1);
-
-
-####     margin-right: calc(var(--space) * -1);
-
-
-####     margin-bottom: calc(var(--space) / 2);
-
-
-####     margin-top: calc(var(--space) * -1);
-
-
-####     overflow: hidden;
-
-
-####     border-radius: var(--radius) var(--radius) 0 0;
-
-
-####     flex-basis: 25%;
-
-
-####     &:empty {
-
-
-####       display: none;
-
-
-####     }
-
-
-####   }
-
-
-####   &__content {
-
-
-####     flex-basis: 75%;
-
-
-####   }
-
-
-####   &__image {
-
-
-####     border: 2px solid gray;
-
-
-####     width: 80%;
-
-
-####     margin-left: 20px;
-
-
-####     margin-right: auto;
-
-
-####     box-shadow: 1px 10px 30px 0 rgba(0, 0, 0, 0.1);
-
-
-####     border-radius: 8px;
-
-
-####     border: 1px solid #ddd;
-
-
-####     border-radius: 4px;
-
-
-####     padding: 5px;
-
-
-####     align-content: center;
-
-
-####   }
-
-
-####   &__title {
-
-
-####     margin-top: 0;
-
-
-####     margin-bottom: 0;
-
-
-####   }
-
-
-####   &__description {
-
-
-####     margin-top: 0;
-
-
-####     display: block;
-
-
-####     margin-block-start: 0em;
-
-
-####     margin-block-end: 0em;
-
-
-####     margin-inline-start: 0px;
-
-
-####     margin-inline-end: 0px;
-
-
-####   }
-
-
-####   &:hover {
-
-
-####     transform: translateY(-5px);
-
-
-####     box-shadow: 1px 10px 30px 0 rgba(0, 0, 0, 0.1);
-
-
-####   }
-
-
-####   &__tags {
-
-
-####     z-index: 1;
-
-
-####     position: relative;
-
-
-####   }
-
-
-####   &__link {
-
-
-####     position: absolute;
-
-
-####     top: 0;
-
-
-####     left: 0;
-
-
-####     width: 100%;
-
-
-####     height: 100%;
-
-
-####     opacity: 0;
-
-
-####     overflow: hidden;
-
-
-####     text-indent: -9999px;
-
-
-####     z-index: 0;
-
-
-####   }
-
-
-#### }
-
-
-#### </style>
-
+<template>
+  <div class="post-card__content-box">
+    <div class="post-card__header">
+      <g-image
+        alt="Cover image"
+        v-if="post.featured_image"
+        class="post-card__image"
+        :src="post.featured_image"
+      />
+    </div>
+    <div class="post-card__content">
+      <h2 class="post-card__title" v-html="post.title" />
+      <p class="post-card__description" v-html="post.summary" />
+      <PostMeta class="post-card__meta" :post="post" />
+    </div>
+  </div>
+</template>
+
+<script>
+import PostMeta from "~/components/PostMeta";
+
+export default {
+  components: {
+    PostMeta
+  },
+  props: ["post"]
+};
+</script>
+
+<style lang="scss">
+.post-card {
+  margin-bottom: var(--space);
+  position: relative;
+
+  &__content-box {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  &__header {
+    margin-left: calc(var(--space) * -1);
+    margin-right: calc(var(--space) * -1);
+    margin-bottom: calc(var(--space) / 2);
+    margin-top: calc(var(--space) * -1);
+    overflow: hidden;
+    border-radius: var(--radius) var(--radius) 0 0;
+    flex-basis: 25%;
+    &:empty {
+      display: none;
+    }
+  }
+  &__content {
+    flex-basis: 75%;
+  }
+  &__image {
+    border: 2px solid gray;
+    width: 80%;
+    margin-left: 20px;
+    margin-right: auto;
+    box-shadow: 1px 10px 30px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    align-content: center;
+  }
+  &__title {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  &__description {
+    margin-top: 0;
+    display: block;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 1px 10px 30px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  &__tags {
+    z-index: 1;
+    position: relative;
+  }
+
+  &__link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    overflow: hidden;
+    text-indent: -9999px;
+    z-index: 0;
+  }
+}
+</style>
 ```
-
 A couple of things to note here;
 
 
@@ -509,201 +298,100 @@ A couple of things to note here;
 Next, build another component (PostMeta.vue) in components with this code:
 
 
-#### <template>
+```
+<template>
+  <div class="post-meta">Posted {{ post.published }}.</div>
+</template>
 
+<script>
+export default {
+  props: ["post"]
+};
+</script>
 
-####   <div class="post-meta">Posted {{ post.published }}.</div>
-
-
-#### </template>
-
-
-#### <script>
-
-
-#### export default {
-
-
-####   props: ["post"]
-
-
-#### };
-
-
-#### </script>
-
-
-#### <style>
-
-
-#### .post-meta {
-
-
-####   font-size: 0.8em;
-
-
-####   opacity: 0.8;
-
-
-#### }
-
-
-#### </style>
-
+<style>
+.post-meta {
+  font-size: 0.8em;
+  opacity: 0.8;
+}
+</style>
+```
 Finally, we’ll use our PostCard component in Index.vue file in the Pages folder. Replace everything inside the <Layout> component with this code:
 
+```
+<template>
+  <div class="post-meta">Posted {{ post.published }}.</div>
+</template>
 
-#### <template>
+<script>
+export default {
+  props: ["post"]
+};
+</script>
 
+<style>
+.post-meta {
+  font-size: 0.8em;
+  opacity: 0.8;
+}
+</style>
 
-####   <Layout>
-
-
-####     <!-- List posts -->
-
-
-####     <div class="posts">
-
-
-####       <PostCard
-
-
-####         v-for="edge in $page.posts.edges"
-
-
-####         :key="edge.node.id"
-
-
-####         :post="edge.node"
-
-
-####       />
-
-
-####     </div>
-
-
-####   </Layout>
-
-
-#### </template>
+```
 
 Then add your GraphQL query:
 
 
-#### <page-query>
-
-
-#### query {
-
-
-####   posts: allButterPosts(order: ASC) {
-
-
-####     edges {
-
-
-####       node {
-
-
-####         id
-
-
-####         title
-
-
-####         url
-
-
-####         published  (format: "MMMM Do, YYYY")
-
-
-####         slug
-
-
-####         summary
-
-
-####         body
-
-
-####         featured_image
-
-
-####         tags {
-
-
-####           name
-
-
-####           slug
-
-
-####         }
-
-
-####       }
-
-
-####     }
-
-
-####   }
-
-
-#### }
-
-
-#### </page-query>
-
-And finally, update your <script> and <style> tags:
-
-
-#### <script>
-
-
-#### import PostCard from "~/components/PostCard.vue";
-
-
-#### export default {
-
-
-####   components: {
-
-
-####     PostCard
-
-
-####   },
-
-
-####   metaInfo: {
-
-
-####     title: "Hello, ButterCMS!"
-
-
-####   }
-
-
-#### };
-
-
-#### </script>
-
-
-#### <style>
-
-
-#### </style>
-
-And that’s it! Restart your gridsome server by running `gridsome serve` and when you navigate to [http://localhost:8080](http://localhost:8080) you should see this:
-
-
-
-<p id="gdcalert6" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/full-gridsome5.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert7">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-![alt_text](images/full-gridsome5.png "image_tooltip")
+```
+<page-query>
+query {
+  posts: allButterPosts(order: ASC) {
+    edges {
+      node {
+        id
+        title
+        url
+        published  (format: "MMMM Do, YYYY")
+        slug
+        summary
+        body
+        featured_image
+        tags {
+          name
+          slug
+        }
+      }
+    }
+  }
+}
+</page-query>
+
+```
+
+And finally, update your` <script>` and `<style>` tags:
+
+
+```
+<script>
+import PostCard from "~/components/PostCard.vue";
+
+export default {
+  components: {
+    PostCard
+  },
+  metaInfo: {
+    title: "Hello, ButterCMS!"
+  }
+};
+</script>
+
+<style>
+</style>
+```
+
+And that’s it! Restart your gridsome server by running `gridsome develop` and when you navigate to [http://localhost:8080](http://localhost:8080) you should see this:
+
+
+![alt_text](images/buttercms-06.png "index page")
 
 
 
@@ -716,19 +404,13 @@ Adding a new PageType to ButterCMS
 First step is defining out a new PageType - Customer Case Study - in ButterCMS. This is what a [very basic] case study might look like:
 
 
-
-<p id="gdcalert7" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/full-gridsome6.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert8">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-![alt_text](images/full-gridsome6.png "image_tooltip")
+![alt_text](images/buttercms-07.png "Defining the Customer Case Study Page")
 
 
 Now you’ve got a framework for Case Studies, go ahead and populate a few in ButterCMS:
 
 
-
-<p id="gdcalert8" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/full-gridsome7.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert9">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-![alt_text](images/full-gridsome7.png "image_tooltip")
+![alt_text](images/buttercms-08.png "image_tooltip")
 
 
 So you’ve got the data in ButterCMS. How do you get that data into Gridsome? 
@@ -737,11 +419,7 @@ The first step is exposing the PageType you want in your gridsome.config.js file
 
 Next, use the Gridsome’s GraphQL Explorer to discover the schema used for case studies. I checked out the Schema Tab in the tool and found `type ButterCustomerCaseStudy_Data` with the attribute names and types, then build a basic graphQL query to explore them:
 
-
-
-<p id="gdcalert9" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/full-gridsome8.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert10">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-![alt_text](images/full-gridsome8.png "image_tooltip")
+![alt_text](images/buttercms-09.png "GraphQL Explorer")
 
 
 Once you know the schema and have a query producing the data you want, the rest is straightforward: 
@@ -754,10 +432,7 @@ Once you know the schema and have a query producing the data you want, the rest 
 *   Now your ready for `gridsome develop` and see what you’ve built:
 
 
-
-<p id="gdcalert10" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/full-gridsome9.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert11">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-![alt_text](images/full-gridsome9.png "image_tooltip")
+![alt_text](images/buttercms-10.png "The Customer Case Studies Page")
 
 
 
@@ -773,5 +448,3 @@ Once you know the schema and have a query producing the data you want, the rest 
  
 
 And that’s it! You’ve created a gridsome project, added ButterCMS to it, gotten a feel for what your users would see as they write posts and case studies and see how gridsome takes the data from ButterCMS and creates static content with it. Now, using the Gridsome/ButterCMS combo, you can have exactly the forms your business users need for their data, and output via gridsome that data as blazingly-fast Gridsome pages. 
-
-<!-- Docs to Markdown version 1.0β17 -->
