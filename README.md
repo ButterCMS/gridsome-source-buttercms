@@ -61,7 +61,7 @@ It usually is at this point the IT manager has a meltdown, more developers get a
 
 Fortunately for your sanity, Gridsome also supports adding in [Shopify](https://gridsome.org/plugins/gridsome-source-shopify) -  and with a few hours tweaking and adjusting layouts, Shopify pages are now part of the the site too.
 
-Of course, just because the CEO wants Shopify doesn't mean the marketing people don't want more pages, especially for the big-ticket parts they get commissions on. So they continue to churn out new pages in ButterCMS using the template you set. Of course, they forget to tell you about the new pages.
+Of course, just because the CEO wants Shopify doesn't mean the marketing people don't want more pages, especially for the big-ticket parts they get commissions on. So they continue to churn out new pages in ButterCMS using the template you set. Of course, they forget to tell you about the new pages, but it doesn't matter: gridsome will pick up the changes on the next build.
 
 ## Decoupling Content Creation from Presentation is a Good Thing
 
