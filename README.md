@@ -4,7 +4,7 @@ So connecting ButterCMS to Gridsome is easy, thanks to a new npm module. That's 
 
 [ButterCMS](https://buttercms.com/) is one of the new "headless" Content Management Systems that has been launched in the last few years as more and more companies seek a better solution than WordPress for getting content on the web.
 
-![dev productivity](images/undraw_dev_productivity_umsq.svg)
+![dev productivity](https://github.com/BobWalsh/gridsome-source-buttercms/edit/gridsome-post/images/undraw_dev_productivity_umsq.svg)
 
 
 ## What is ButterCMS?
