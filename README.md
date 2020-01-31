@@ -33,7 +33,7 @@ Let's say you're a newly hired developer for **Acme Diesel Parts**, a seller and
 
 Now, since you already have a ButterCMS and you know Gridsome, here's your **Plan of Action**:
 
-![Plan of Action](images/ndraw_master_plan_95wa.svg)
+![Plan of Action](images/undraw_master_plan_95wa.svg)
 
 1. First off, you create in ButterCMS a template for the Parts marketing wants to showcase: Caterpillar,Detroit Diesel, and John Deere. The sales and marketing people can then populate those records with the text and images they want. As the marketing people realize they need to make changes in the template, you can step in and make those on the fly.
 2. You already have in ButterCMS the boilerplate every Acme Diesel Parts site has to include like the satisfaction guarantee page, the privacy page and the terms of use page, as well as a contact form.
@@ -70,7 +70,7 @@ The beauty of decoupling your data entry from your site definition and display f
 You can focus on the presentation layer once you wire up the site, knowing that ButterCMS can handle whatever content organization you need for this project. And since you're using a Static Site Generator like Gridsome, or for that matter React-based Gatsby, your pages are static, and nearly hack-proof.
 
 ## A Happy Ending
-![A Happy ending](images/ndraw_success_factors_fay0.svg)
+![A Happy ending](images/undraw_success_factors_fay0.svg)
 
 Thanks to using ButterCMS and Gridsome, the site for the show is awesomely fast and totally up to date. The marketing team praises you to the heavens because the site you built looks great and loads in a blink of an eye, unlike the sites of their competitors.
 
