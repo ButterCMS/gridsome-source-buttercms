@@ -79,7 +79,10 @@ The beauty of decoupling your data entry from your site definition and display f
 You can focus on the presentation layer once you wire up the site, knowing that ButterCMS can handle whatever content organization you need for this project. And since you're using a Static Site Generator like Gridsome, or for that matter React-based Gatsby, your pages are static, and nearly hack-proof.
 
 ## A Happy Ending
-![A Happy ending](images/undraw_success_factors_fay0.svg)
+
+<p align="center">
+  <img alt="A Happy Ending" width="460" height="300" src="images/undraw_success_factors_fay0.svg">
+</p>
 
 Thanks to using ButterCMS and Gridsome, the site for the show is awesomely fast and totally up to date. The marketing team praises you to the heavens because the site you built looks great and loads in a blink of an eye, unlike the sites of their competitors.
 
