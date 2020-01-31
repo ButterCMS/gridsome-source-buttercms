@@ -4,7 +4,7 @@ So connecting ButterCMS to Gridsome is easy, thanks to a new npm module. That's 
 
 [ButterCMS](https://buttercms.com/) is one of the new "headless" Content Management Systems that has been launched in the last few years as more and more companies seek a better solution than WordPress for getting content on the web.
 
-![dev productivity](https://github.com/BobWalsh/gridsome-source-buttercms/edit/gridsome-post/images/undraw_dev_productivity_umsq.svg)
+![dev productivity](/images/undraw_dev_productivity_umsq.svg)
 
 
 ## What is ButterCMS?
@@ -70,7 +70,7 @@ The beauty of decoupling your data entry from your site definition and display f
 You can focus on the presentation layer once you wire up the site, knowing that ButterCMS can handle whatever content organization you need for this project. And since you're using a Static Site Generator like Gridsome, or for that matter React-based Gatsby, your pages are static, and nearly hack-proof.
 
 ## A Happy Ending
-![A Happy ending****](uimages/ndraw_success_factors_fay0.svg)
+![A Happy ending](images/ndraw_success_factors_fay0.svg)
 
 Thanks to using ButterCMS and Gridsome, the site for the show is awesomely fast and totally up to date. The marketing team praises you to the heavens because the site you built looks great and loads in a blink of an eye, unlike the sites of their competitors.
 
