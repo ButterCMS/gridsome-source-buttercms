@@ -9,36 +9,36 @@ This is a guide to using ButterCMS in a gridsome project. It will walk you throu
 Prepare to create a gridsome project:
 
 
-    1. `npm install --global @gridsome/cli` to update/install the gridsome CLI.
-    2. `gridsome create <new_project_name>` to create your gridsome project.
-    3. CD into the project and` `npm install gridsome-source-buttercms` to install the ButterCMS gridsome npm module.
-    4. Let’s also include the npm modules for handling SCSS styling: `npm install -D sass-loader node-sass`
-    5. Create a free account on [ButterCMS](https://buttercms.com).
-    6. Copy and save off your AuthToken from the welcome screen or Profile >> settings (it looks like this: a985f3f782f2115cd0f1b3ed12b52ec12295d6bb.
-    7. Add a second Blog Post to your ButterCMS account by going to Blog Posts, then click the green “Write New Post” button at the top and write and Publish your post.
-    8. Moving over to your project code, find your gridsome.config.js file and add to plugins: 
+  1. `npm install --global @gridsome/cli` to update/install the gridsome CLI.
+  2. `gridsome create <new_project_name>` to create your gridsome project.
+  3. CD into the project and` `npm install gridsome-source-buttercms` to install the ButterCMS gridsome npm module.
+  4. Let’s also include the npm modules for handling SCSS styling: `npm install -D sass-loader node-sass`
+  5. Create a free account on [ButterCMS](https://buttercms.com).
+  6. Copy and save off your AuthToken from the welcome screen or Profile >> settings (it looks like this: a985f3f782f2115cd0f1b3ed12b52ec12295d6bb.
+  7. Add a second Blog Post to your ButterCMS account by going to Blog Posts, then click the green “Write New Post” button at the top and write and Publish your post.
+  8. Moving over to your project code, find your gridsome.config.js file and add to plugins: 
 
-    ```
-    {
-        use: "gridsome-source-buttercms",
-        options: {
-          authToken: 'a985f3f782f2005...,<your AuthToken>',
-          collections: [''],
-          pages: '',
-          pageTypes: ''
- 	}
- 	```
+  ```
+  {
+      use: "gridsome-source-buttercms",
+      options: {
+        authToken: 'a985f3f782f2005...,<your AuthToken>',
+        collections: [''],
+        pages: '',
+        pageTypes: ''
+}
+```
 
-    9. Open `index.vue` in the pages folder (the default view) and make the changes described below in “Change pages/Index.vue”
-    10. Add a new vue component to the components folder, PostCard.vue, using the code below in “Add PostCard.vue” to components.
-    11. From your CLI, run `gridsome develop` and you should see two post summaries: the default ButterCMS post and your post.
-    12. Now, let’s add in access to our buttercms pageType, ‘customer_case_study’:
-      -   Change gridsome.config.js from
-          -   `pageTypes: ''` to
-          -   `pageTypes: 'customer_case_study'`
-      -   Add a Studies.vue to Pages, to loop through `<`CaseStudy>` items
-      -   Add a CaseStudy.vue to Components that details an actual Case Study.
-      -   Modify your `Default.vue` file in Layouts so you have a menuitem for Case Studies.
+  9. Open `index.vue` in the pages folder (the default view) and make the changes described below in “Change pages/Index.vue”
+  10. Add a new vue component to the components folder, PostCard.vue, using the code below in “Add PostCard.vue” to components.
+  11. From your CLI, run `gridsome develop` and you should see two post summaries: the default ButterCMS post and your post.
+  12. Now, let’s add in access to our buttercms pageType, ‘customer_case_study’:
+    -   Change gridsome.config.js from
+        -   `pageTypes: ''` to
+        -   `pageTypes: 'customer_case_study'`
+    -   Add a Studies.vue to Pages, to loop through `<`CaseStudy>` items
+    -   Add a CaseStudy.vue to Components that details an actual Case Study.
+    -   Modify your `Default.vue` file in Layouts so you have a menuitem for Case Studies.
 
 
 ## Setup
@@ -97,9 +97,6 @@ That means you can create whatever content types your users need in ButterCMS an
 
 ButterCMS uses the idea of Pages as a way of organizing a given kind of data into whatever schema makes sense for you. In Pages, you can totally customize the structure and layout of a Page to match the data you want to hold. Clicking on a New Page starts the Page Editor, then you build out the page. Here’s what the Page Editor looks like as I set up a Page to hold data for Event Listings. 
 
-
-
-<p id="gdcalert3" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/full-gridsome2.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert4">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 ![alt_text](images/buttercms-03.png "Defining a new screen")
 
