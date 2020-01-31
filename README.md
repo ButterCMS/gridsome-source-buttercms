@@ -4,7 +4,8 @@ So connecting ButterCMS to Gridsome is easy, thanks to a new npm module. That's 
 
 [ButterCMS](https://buttercms.com/) is one of the new "headless" Content Management Systems that has been launched in the last few years as more and more companies seek a better solution than WordPress for getting content on the web.
 
-![dev productivity](images/undraw_dev_productivity_umsq.svg)
+![dev productivity](https://github.com/BobWalsh/gridsome-source-buttercms/edit/gridsome-post/images/undraw_dev_productivity_umsq.svg)
+
 
 ## What is ButterCMS?
 
@@ -18,7 +19,7 @@ Meanwhile, when you build out the pages you want to use in your ButterCMS, you c
 
 So that's ButterCMS; what's Gridsome? Gridsome is a Vue website development framework for creating extremely fast and secure sites. It comes with plugins for adding everything from SEO markup to search, to your favorite headlessCMS (hopefully ButterCMS), all organized into a set of folders that simply make sense. Gridsome uses file-based and dynamic routing against a GraphQL data layer, with automatic code splitting.
 
-![](gridsome.png)
+![](images/gridsome.png)
 
 When you're ready, you can deploy your project to any number of services that serve static assets like [Netlify](https://gridsome.org/docs/deploy-to-netlify/), [AWS Amplify](https://gridsome.org/docs/deploy-to-amplify/), [ZEIT Now](https://gridsome.org/docs/deploy-to-zeit-now/), [GitLab Pages](https://gridsome.org/docs/deploy-to-gitlab/), [GitHub Pages](https://gridsome.org/docs/deploy-to-github/). And since you're serving static pages and assets your site is extremely secure against those who might want to deface or hack into your site.
 
@@ -32,7 +33,7 @@ Let's say you're a newly hired developer for **Acme Diesel Parts**, a seller and
 
 Now, since you already have a ButterCMS and you know Gridsome, here's your **Plan of Action**:
 
-![Plan of Action](uimages/ndraw_master_plan_95wa.svg)
+![Plan of Action](images/ndraw_master_plan_95wa.svg)
 
 1. First off, you create in ButterCMS a template for the Parts marketing wants to showcase: Caterpillar,Detroit Diesel, and John Deere. The sales and marketing people can then populate those records with the text and images they want. As the marketing people realize they need to make changes in the template, you can step in and make those on the fly.
 2. You already have in ButterCMS the boilerplate every Acme Diesel Parts site has to include like the satisfaction guarantee page, the privacy page and the terms of use page, as well as a contact form.
