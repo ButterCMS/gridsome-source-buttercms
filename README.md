@@ -20,7 +20,9 @@ Meanwhile, when you build out the pages you want to use in your ButterCMS, you c
 
 So that's ButterCMS; what's Gridsome? Gridsome is a Vue website development framework for creating extremely fast and secure sites. It comes with plugins for adding everything from SEO markup to search, to your favorite headlessCMS (hopefully ButterCMS), all organized into a set of folders that simply make sense. Gridsome uses file-based and dynamic routing against a GraphQL data layer, with automatic code splitting.
 
-![](images/gridsome.png)
+<p align="center">
+  <img alt="gridsome" width="460" height="300" src="/images/gridsome.png">
+</p>
 
 When you're ready, you can deploy your project to any number of services that serve static assets like [Netlify](https://gridsome.org/docs/deploy-to-netlify/), [AWS Amplify](https://gridsome.org/docs/deploy-to-amplify/), [ZEIT Now](https://gridsome.org/docs/deploy-to-zeit-now/), [GitLab Pages](https://gridsome.org/docs/deploy-to-gitlab/), [GitHub Pages](https://gridsome.org/docs/deploy-to-github/). And since you're serving static pages and assets your site is extremely secure against those who might want to deface or hack into your site.
 
@@ -28,13 +30,17 @@ When you put Gridsome and ButterCMS together, you have a powerful workflow for d
 
 ## Give me an Example
 
-![Diesel Parts](images/negative-space-industrial-gears-machine.jpg)
+<p align="center">
+  <img alt="Diesel Parts" width="460" height="300" src="images/negative-space-industrial-gears-machine.jpg">
+</p>
 
 Let's say you're a newly hired developer for **Acme Diesel Parts**, a seller and manufacturer of diesel parts. The Marketing VP goes to your manager and says they need a custom site for the upcoming **International Diesel Parts Show** in New York. It has be ultra fast, faster than competitors, attractive and well designed. And you have all of two weeks to pull everything together.
 
 Now, since you already have a ButterCMS and you know Gridsome, here's your **Plan of Action**:
 
-![Plan of Action](images/undraw_master_plan_95wa.svg)
+<p align="center">
+  <img alt="Plan of Action" width="460" height="300" src="images/undraw_master_plan_95wa.svg">
+</p>
 
 1. First off, you create in ButterCMS a template for the Parts marketing wants to showcase: Caterpillar,Detroit Diesel, and John Deere. The sales and marketing people can then populate those records with the text and images they want. As the marketing people realize they need to make changes in the template, you can step in and make those on the fly.
 2. You already have in ButterCMS the boilerplate every Acme Diesel Parts site has to include like the satisfaction guarantee page, the privacy page and the terms of use page, as well as a contact form.
@@ -54,7 +60,9 @@ Now, since you already have a ButterCMS and you know Gridsome, here's your **Pla
 Your manager is happy because the entire project could be done by one developer (you), the graphic artist/web designer is ecstatic because you're able to produce HTML landing pages that actually looks like what they did in Adobe Illustrator, and the sales and marketing people are jumping up and down because unlike their competitor's WordPress site, our site renders lightning fast on their iPhones.
 
 ## Then the CEO sees the site
-![CEO](images/undraw_designer_mindset_7fhu.svg)
+<p align="center">
+  <img alt="CEO" width="460" height="300" src="images/undraw_designer_mindset_7fhu.svg">
+</p>
 
 Then the CEO of the company reviews the site for the first time and decides the site looks so good, Acme Diesel Parts [Shopify](images/https://www.shopify.com/) pages should be part of the site too. *And the event starts in 3 days.* **Gulp!**
 
