@@ -65,14 +65,14 @@ Go to `[https://buttercms.com/](https://buttercms.com/)` and start your free acc
 
 
 
-![alt_text](images/buttercms-01.png "ButterCMS welcome screen")
+![alt_text](https://cdn.buttercms.com/NVVVpqCbRyI2M5fLZsKA "ButterCMS welcome screen")
 
 
 Answer the questions, and next you’ll see ButterCMS’s start screen:
 
 
 
-![alt_text](images/buttercms-02.png  "Select a framework")
+![alt_text](https://cdn.buttercms.com/yFDWSqNQrae37nkXpJEh  "Select a framework")
 
 
 That long string is your API Token; you’ll need it to include in the butterCMS/gridsome configuration code.
@@ -98,7 +98,7 @@ That means you can create whatever content types your users need in ButterCMS an
 ButterCMS uses the idea of Pages as a way of organizing a given kind of data into whatever schema makes sense for you. In Pages, you can totally customize the structure and layout of a Page to match the data you want to hold. Clicking on a New Page starts the Page Editor, then you build out the page. Here’s what the Page Editor looks like as I set up a Page to hold data for Event Listings. 
 
 
-![alt_text](images/buttercms-03.png "Defining a new screen")
+![alt_text](https://cdn.buttercms.com/VPAY0nsoRlqxLf5icalp "Defining a new screen")
 
 
 So Pages let you predefine specific containers for specific kinds of data. To give you a headstart, and because the definition of a blog post is pretty well set, ButterCMS comes with one predefined Page: The BlogPost. 
@@ -112,13 +112,13 @@ Here’s what that Blog Post looks like in ButterCMS:
 
 
 
-![alt_text](images/buttercms-04.png "Creating a new post")
+![alt_text](https://cdn.buttercms.com/a3azFCr8R3CbzNIvwBxI "Creating a new post")
 
 
 Make sure to Publish it. You should now see it listed in Blog Posts:
 
 
-![alt_text](images/buttercms-05.png "Posts are published")
+![alt_text](https://cdn.buttercms.com/qLZwec8lSFqRSL6m48kw "Posts are published")
 
 
 So there are Blog Posts in ButterCMS. But there’s also - 
@@ -382,7 +382,7 @@ export default {
 And that’s it! Restart your gridsome server by running `gridsome develop` and when you navigate to [http://localhost:8080](http://localhost:8080) you should see this:
 
 
-![alt_text](images/buttercms-06.png "index page")
+![alt_text](https://cdn.buttercms.com/iT3OTC6SJmEHA28BqRA5 "index page")
 
 
 
@@ -395,13 +395,13 @@ Adding a new PageType to ButterCMS
 First step is defining out a new PageType - Customer Case Study - in ButterCMS. This is what a [very basic] case study might look like:
 
 
-![alt_text](images/buttercms-07.png "Defining the Customer Case Study Page")
+![alt_text](https://cdn.buttercms.com/IabK2QegTV6dxmEiqEUs "Defining the Customer Case Study Page")
 
 
 Now you’ve got a framework for Case Studies, go ahead and populate a few in ButterCMS:
 
 
-![alt_text](images/buttercms-08.png "image_tooltip")
+![alt_text](https://cdn.buttercms.com/2onQLrFXSeecs28vTT4Q "image_tooltip")
 
 
 So you’ve got the data in ButterCMS. How do you get that data into Gridsome? 
@@ -410,7 +410,7 @@ The first step is exposing the PageType you want in your gridsome.config.js file
 
 Next, use the Gridsome’s GraphQL Explorer to discover the schema used for case studies. I checked out the Schema Tab in the tool and found `type ButterCustomerCaseStudy_Data` with the attribute names and types, then build a basic graphQL query to explore them:
 
-![alt_text](images/buttercms-09.png "GraphQL Explorer")
+![alt_text](https://cdn.buttercms.com/yELPentXQDea0fPxmTwn "GraphQL Explorer")
 
 
 Once you know the schema and have a query producing the data you want, the rest is straightforward: 
@@ -423,7 +423,7 @@ Once you know the schema and have a query producing the data you want, the rest 
 *   Now your ready for `gridsome develop` and see what you’ve built:
 
 
-![alt_text](images/buttercms-10.png "The Customer Case Studies Page")
+![alt_text](https://cdn.buttercms.com/YcKXotESZ6gR323OFyGb "The Customer Case Studies Page")
 
 
 
