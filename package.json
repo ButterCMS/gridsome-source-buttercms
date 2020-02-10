@@ -1,6 +1,6 @@
 {
   "name": "gridsome-source-buttercms",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Source plugin for pulling blog posts, authors, categories, tags, and content fields into Gridsome from ButterCMS.",
   "main": "index.js",
   "scripts": {

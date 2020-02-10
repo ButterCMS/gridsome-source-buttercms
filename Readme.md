@@ -311,22 +311,17 @@ Finally, we’ll use our PostCard component in Index.vue file in the Pages folde
 
 ```
 <template>
-  <div class="post-meta">Posted {{ post.published }}.</div>
+  <Layout>
+    <!-- List posts -->
+    <div class="posts">
+      <PostCard
+        v-for="edge in $page.posts.edges"
+        :key="edge.node.id"
+        :post="edge.node"
+      />
+    </div>
+  </Layout>
 </template>
-
-<script>
-export default {
-  props: ["post"]
-};
-</script>
-
-<style>
-.post-meta {
-  font-size: 0.8em;
-  opacity: 0.8;
-}
-</style>
-
 ```
 
 Then add your GraphQL query:
