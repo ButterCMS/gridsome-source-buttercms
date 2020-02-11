@@ -1,7 +1,7 @@
 
 # @gridsome/buttercms
 
-This is a guide to using ButterCMS in a gridsome project. It will walk you through what to add to a basic gridsome project to enable ButterCMS, how to add some content to display to ButterCMS, and what Vue components you’ll need to display that content.
+This is a guide to using ButterCMS as a [https://buttercms.com/gridsome-cms/](gridsome cms) and [https://buttercms.com/gridsome-blog-engine/](blog engine). It will walk you through what to add to a basic gridsome project to enable ButterCMS, how to add some content to display to ButterCMS, and what Vue components you’ll need to display that content.
 
 
 ## The TL;DR version:
