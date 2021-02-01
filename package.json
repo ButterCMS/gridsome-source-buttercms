@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/ButterCMS/gridsome-source-buttercms#readme",
   "dependencies": {
-    "buttercms": "^1.1.4",
+    "buttercms": "^1.2.6",
     "camelcase": "^5.3.1"
   },
   "devDependencies": {
