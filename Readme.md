@@ -23,9 +23,16 @@ Prepare to create a gridsome project:
       use: "gridsome-source-buttercms",
       options: {
         authToken: 'a985f3f782f2005...,<your AuthToken>',
-        collections: [''],
-        pages: '',
-        pageTypes: ''
+        // Optional array of Collections keys 
+        collections: ['collection_key'],
+        // Optional array of Page Types keys
+        pageTypes: ['page_type_key'],
+        // Optional array of locales (if configured in your account)
+        locales: ['en', 'es', 'fr'],
+        // Optional parameter to return draft content
+        preview: true,
+        // Optional parameter to define the levels of relationships to serialize with default value 2
+        levels: 2
 }
 ```
 
@@ -34,8 +41,8 @@ Prepare to create a gridsome project:
   11. From your CLI, run `gridsome develop` and you should see two post summaries: the default ButterCMS post and your post.
   12. Now, let’s add in access to our buttercms pageType, ‘customer_case_study’:
     -   Change gridsome.config.js from
-        -   `pageTypes: ''` to
-        -   `pageTypes: 'customer_case_study'`
+        -   `pageTypes: ['']` to
+        -   `pageTypes: ['customer_case_study']`
     -   Add a Studies.vue to Pages, to loop through `<`CaseStudy>` items
     -   Add a CaseStudy.vue to Components that details an actual Case Study.
     -   Modify your `Default.vue` file in Layouts so you have a menuitem for Case Studies.
@@ -151,8 +158,7 @@ module.exports = {
     options: {
       authToken: process.env.GRIDSOME_BUTTER_AUTHTOKEN  || process.env.BUTTER_AUTHTOKEN,
       collections: [''],
-      pages: '',
-      pageTypes: ''
+      pageTypes: ['']
     }
   }
   ]
@@ -401,7 +407,7 @@ Now you’ve got a framework for Case Studies, go ahead and populate a few in Bu
 
 So you’ve got the data in ButterCMS. How do you get that data into Gridsome? 
 
-The first step is exposing the PageType you want in your gridsome.config.js file by changing `pageTypes ‘ ‘` to `’pageTypes: ‘customer_case-study’`. This exposes your case study data inside your gridsome project. Since you want to query all of the customer case studies, you add the pageType: not specific pages to the line above.
+The first step is exposing the PageType you want in your gridsome.config.js file by changing `pageTypes ‘ ‘` to `’pageTypes: ‘customer_case-study’`. This exposes your case study data inside your gridsome project.
 
 Next, use the Gridsome’s GraphQL Explorer to discover the schema used for case studies. I checked out the Schema Tab in the tool and found `type ButterCustomerCaseStudy_Data` with the attribute names and types, then build a basic graphQL query to explore them:
 
@@ -426,10 +432,9 @@ Once you know the schema and have a query producing the data you want, the rest 
 
 
 
-1. You might think that you add `customer_case_study’ to the pages part of your gridsome.config.js. Nope. If you wanted to pull in just a specific page from ButterCMS, that’s what you would do, but for this post, we are going to expose all pages of the desired pageType, ‘customer_case_study’. 
-2. If you’re a Gridsome/graphQL newbie like me, figuring out how to shape your GraphQL query is the hardest part of the journey. RTFM just a bit, specifically this doc on [Introspection](https://graphql.org/learn/introspection/) gives you a great starting point.
-3. **Keep Calm and Code Along** - You’re trying to understand gridsome, graphQL, the data schema for your data in ButterCMS, how ButterCMS works, and how to code in Vue/gridsome, _all at the same time_! That’s why the The GraphQL explorer is great - you can focus on crafting your queries there.
-4. Remember Gridsome builds static pages - when you change queries, page code and the like, expect to have to stop and restart Gridsome.
+1. If you’re a Gridsome/graphQL newbie like me, figuring out how to shape your GraphQL query is the hardest part of the journey. RTFM just a bit, specifically this doc on [Introspection](https://graphql.org/learn/introspection/) gives you a great starting point.
+2. **Keep Calm and Code Along** - You’re trying to understand gridsome, graphQL, the data schema for your data in ButterCMS, how ButterCMS works, and how to code in Vue/gridsome, _all at the same time_! That’s why the The GraphQL explorer is great - you can focus on crafting your queries there.
+3. Remember Gridsome builds static pages - when you change queries, page code and the like, expect to have to stop and restart Gridsome.
 
  
 

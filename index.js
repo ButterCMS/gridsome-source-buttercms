@@ -4,36 +4,51 @@ const camelCase = require('camelcase');
 class ButterSource {
   static defaultOptions() {
     return {
-      authToken: process.env.GRIDSOME_BUTTER_AUTHTOKEN || process.env.BUTTER_AUTHTOKEN,
+      authToken:
+        process.env.GRIDSOME_BUTTER_AUTHTOKEN || process.env.BUTTER_AUTHTOKEN,
       collections: [''],
-      pages: '',
-      pageTypes: '',
-      typeName: 'Butter'
+      pageTypes: [],
+      typeName: 'Butter',
+      locales: [],
+      preview: false,
+      levels: 2
     };
   }
 
   constructor(api, options = ButterSource.defaultOptions()) {
-    this.api = api;
-    this.options = options;
-    this.client = ButterCMS(options.authToken, false, 20000);
     if (!options.authToken) throw new Error('ButterSource: Missing API Key');
+    this.options = options;
+
+    this.api = api;
+    this.client = ButterCMS(options.authToken, false, 20000);
+    this.params = {
+      preview: this.options.preview ? 1 : 0,
+      levels: this.options.levels
+    };
 
     api.loadSource(async actions => {
       console.log('Processing data...');
-      await this.allButterPosts(actions);
-      await this.allButterCollections(actions);
-      await this.allButterPages(actions);
+      try {
+        await Promise.all([
+          this.allButterPosts(actions),
+          this.allButterCollections(actions),
+          this.allButterPages(actions)
+        ]);
+      } catch (e) {
+        console.error('Failed to create all nodes.');
+        console.error(e);
+      }
     });
   }
 
-    /****************************************************
+  /****************************************************
     STEP ONE: Get all butter posts
   ****************************************************/
   async allButterPosts(actions) {
-    const post = await this.client.post.list()
-    const  { data } = post.data;
+    const post = await this.client.post.list();
+    const { data } = post.data;
     const contentType = actions.addCollection({
-      typeName: this.createTypeName("posts")
+      typeName: this.createTypeName('posts')
     });
     for (const item of data) {
       contentType.addNode({
@@ -46,48 +61,64 @@ class ButterSource {
     STEP TWO: Get all butter collections
   ****************************************************/
   async allButterCollections(actions) {
-    const collection = await this.client.content.retrieve(this.options.collections)
+    const collection = await this.client.content.retrieve(
+      this.options.collections
+    );
     const { data } = collection.data;
     const contentType = actions.addCollection({
       typeName: this.createTypeName('collection')
     });
     contentType.addNode({
       data
-    })
+    });
   }
 
   /****************************************************
     STEP THREE: Get all butter pages
   ****************************************************/
-  async allButterPages(actions) {
-    if (this.options.pages || this.options.pageTypes) {
-      if (this.options.pages) {
-        const page = await this.client.page.retrieve('*', this.options.pages)
-        const { data } = page.data;
+  allButterPages(actions) {
+    const promises = [];
+    for (const locale of this.options.locales || []) {
+      promises.push(this.createNodesForSinglePages(actions, locale));
+      promises.push(this.createNodesForPagesWithPageType(actions, locale));
+    }
+    return Promise.all(promises);
+  }
+
+  async createNodesForSinglePages(actions, locale) {
+    const params = {
+      ...this.params,
+      ...(locale && { locale })
+    };
+
+    const singlePages = await this.client.page.list('*', params);
+    const { data } = singlePages.data;
+    const contentType = actions.addCollection({
+      typeName: this.createTypeName('pages')
+    });
+    for (const page of data) {
+      this.addPageNode(page, contentType, locale);
+    }
+  }
+
+  async createNodesForPagesWithPageType(actions, locale) {
+    const params = {
+      ...this.params,
+      ...(locale && { locale })
+    };
+    const pageTypesPages = (this.options.pageTypes || []).map(pageType =>
+      this.client.page.list(pageType, params)
+    );
+    const pageTypesPagesData = await Promise.all(pageTypesPages);
+
+    for (const pageTypePages of pageTypesPagesData) {
+      const { data } = pageTypePages.data;
+      if (data.length) {
         const contentType = actions.addCollection({
-          typeName: this.createTypeName('pages')
+          typeName: this.createTypeName(data[0].page_type)
         });
-        contentType.addNode({
-          slug: data.slug,
-          page_type: data.page_type,
-          data: data.fields
-        })
-      }
-      if (this.options.pageTypes) {
-        const page = await this.client.page.list(this.options.pageTypes)
-        const { data } = page.data;
-        const pageTypeName = data.map(pages => {
-          return pages.page_type
-        })
-         const contentType = actions.addCollection({
-          typeName: this.createTypeName(pageTypeName[0])
-        });
-        for (const item of data) {
-          contentType.addNode({
-            slug: item.slug,
-            page_type: item.page_type,
-            data: item.fields
-          })
+        for (const page of data) {
+          this.addPageNode(page, contentType, locale);
         }
       }
     }
@@ -96,6 +127,15 @@ class ButterSource {
   createTypeName(typeName = '') {
     return camelCase(`${this.options.typeName} ${typeName}`, {
       pascalCase: true
+    });
+  }
+
+  addPageNode(page, contentType, locale) {
+    const { fields: data, ...pageData } = page;
+    contentType.addNode({
+      ...pageData,
+      data: page.fields,
+      locale
     });
   }
 }
