@@ -23,7 +23,8 @@ class ButterSource {
     this.client = ButterCMS(options.authToken, false, 20000);
     this.params = {
       preview: this.options.preview ? 1 : 0,
-      levels: this.options.levels
+      levels: this.options.levels,
+      page_size: 100
     };
 
     api.loadSource(async actions => {
@@ -77,50 +78,50 @@ class ButterSource {
     STEP THREE: Get all butter pages
   ****************************************************/
   allButterPages(actions) {
-    const promises = [];
-    for (const locale of this.options.locales || []) {
-      promises.push(this.createNodesForSinglePages(actions, locale));
-      promises.push(this.createNodesForPagesWithPageType(actions, locale));
+    if ((this.options.locales || []).length) {
+      return Promise.all(
+        (this.options.locales || []).map(locale =>
+          this.createNodesForPages(actions, locale)
+        )
+      );
     }
-    return Promise.all(promises);
+
+    return this.createNodesForPages(actions, null);
   }
 
-  async createNodesForSinglePages(actions, locale) {
-    const params = {
-      ...this.params,
-      ...(locale && { locale })
-    };
-
-    const singlePages = await this.client.page.list('*', params);
-    const { data } = singlePages.data;
-    const contentType = actions.addCollection({
-      typeName: this.createTypeName('pages')
-    });
-    for (const page of data) {
-      this.addPageNode(page, contentType, locale);
-    }
-  }
-
-  async createNodesForPagesWithPageType(actions, locale) {
-    const params = {
-      ...this.params,
-      ...(locale && { locale })
-    };
-    const pageTypesPages = (this.options.pageTypes || []).map(pageType =>
-      this.client.page.list(pageType, params)
+  async createNodesForPages(actions, locale) {
+    await Promise.all(
+      [...this.options.pageTypes, '*'].map(pageType =>
+        this.createNodesForPagesWithPageType(actions, pageType, locale)
+      )
     );
-    const pageTypesPagesData = await Promise.all(pageTypesPages);
+  }
 
-    for (const pageTypePages of pageTypesPagesData) {
-      const { data } = pageTypePages.data;
-      if (data.length) {
-        const contentType = actions.addCollection({
-          typeName: this.createTypeName(data[0].page_type)
-        });
-        for (const page of data) {
-          this.addPageNode(page, contentType, locale);
-        }
+  async createNodesForPagesWithPageType(actions, pageType, locale) {
+    const params = {
+      ...this.params,
+      ...(locale && { locale })
+    };
+    let page = 1;
+
+    while (page) {
+      const pages = await this.client.page.list(pageType, {
+        ...params,
+        page
+      });
+      const {
+        data,
+        meta: { next_page: nextPage }
+      } = pages.data;
+      const contentType = actions.addCollection({
+        typeName: this.createTypeName(pageType === '*' ? 'pages' : pageType)
+      });
+
+      for (const page of data) {
+        this.addPageNode(page, contentType, locale);
       }
+
+      page = nextPage;
     }
   }
 
@@ -131,11 +132,12 @@ class ButterSource {
   }
 
   addPageNode(page, contentType, locale) {
-    const { fields: data, ...pageData } = page;
+    const { fields: data, page_type: pageType, ...pageData } = page;
     contentType.addNode({
       ...pageData,
       data: page.fields,
-      locale
+      locale,
+      page_type: pageType || '*'
     });
   }
 }
