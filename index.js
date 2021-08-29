@@ -50,11 +50,7 @@ class ButterSource {
       typeName: this.createTypeName('posts')
     });
 
-    posts.forEach(post =>
-      contentType.addNode({
-        ...post
-      })
-    );
+    posts.forEach(post => contentType.addNode(post));
   }
 
   /****************************************************
@@ -88,11 +84,15 @@ class ButterSource {
         });
 
         pages.forEach(page => {
-          const { fields: data, page_type: pageType, ...pageData } = page;
+          // remove `fields` as a key from page so it doesn't get added to node
+          // needs to be renamed to `data` for use
+          const { fields: data, ...pageData } = page;
+          // create node
+          // - by assigning `page_type` explicitly here, we overwrite `pageData.page_type`
           contentType.addNode({
             ...pageData,
-            data: page.fields,
-            page_type: pageType || '*'
+            data,
+            page_type: page.page_type || '*'
           });
         });
       })

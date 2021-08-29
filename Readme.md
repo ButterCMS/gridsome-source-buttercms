@@ -432,7 +432,7 @@ Once you know the schema and have a query producing the data you want, the rest 
 
 
 
-1. If you’re a Gridsome/graphQL newbie like me, figuring out how to shape your GraphQL query is the hardest part of the journey. RTFM just a bit, specifically this doc on [Introspection](https://graphql.org/learn/introspection/) gives you a great starting point.
+1. If you’re a Gridsome/graphQL newbie like me, figuring out how to shape your GraphQL query is the hardest part of the journey. RTM just a bit, specifically this doc on [Introspection](https://graphql.org/learn/introspection/) gives you a great starting point.
 2. **Keep Calm and Code Along** - You’re trying to understand gridsome, graphQL, the data schema for your data in ButterCMS, how ButterCMS works, and how to code in Vue/gridsome, _all at the same time_! That’s why the The GraphQL explorer is great - you can focus on crafting your queries there.
 3. Remember Gridsome builds static pages - when you change queries, page code and the like, expect to have to stop and restart Gridsome.
 

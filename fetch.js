@@ -15,9 +15,9 @@ class FetchButterCMSData {
   }
 
   async getPagesWithPageType(pageType) {
-    if ((this.locales || []).length) {
+    if (this.locales.length) {
       return (await Promise.all(
-        (this.locales || []).map(locale =>
+        this.locales.map(locale =>
           this.getLocalizedPagesWithPageType(pageType, locale)
         )
       )).flat();
@@ -29,6 +29,7 @@ class FetchButterCMSData {
   async getBlogPosts() {
     const allPosts = [];
     let page = 1;
+
     while (page) {
       const posts = await this.client.post.list({ ...this.params, page });
       const {
@@ -64,23 +65,27 @@ class FetchButterCMSData {
 
   async getLocalizedPagesWithPageType(pageType, locale) {
     const pagesWithPageType = [];
-    const params = {
-      ...this.params,
-      ...(locale && { locale })
-    };
     let page = 1;
+    const localLocale = locale ? { locale } : {};
+
     while (page) {
       const pages = await this.client.page.list(pageType, {
-        ...params,
+        ...this.params,
+        ...localLocale,
         page
       });
       const {
         data,
         meta: { next_page: nextPage }
       } = pages.data;
-      pagesWithPageType.push(
-        ...data.map(item => ({ ...item, ...(locale && { locale }) }))
-      );
+
+      data.forEach(item => {
+        pagesWithPageType.push({
+          ...item,
+          ...localLocale
+        });
+      });
+
       page = nextPage;
     }
 
@@ -89,12 +94,14 @@ class FetchButterCMSData {
 
   async getCollectionData(collectionSlug, locale) {
     const allCollectionsData = [];
+    const localLocale = locale ? { locale } : {};
     let page = 1;
+
     while (page) {
       const collection = await this.client.content.retrieve([collectionSlug], {
         ...this.params,
         page,
-        ...(locale && { locale })
+        ...localLocale
       });
       const {
         data,
