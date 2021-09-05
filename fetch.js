@@ -27,7 +27,7 @@ class FetchButterCMSData {
   }
 
   async getBlogPosts() {
-    const allPosts = [];
+    let allPosts = [];
     let page = 1;
 
     while (page) {
@@ -36,7 +36,7 @@ class FetchButterCMSData {
         data,
         meta: { next_page: nextPage }
       } = posts.data;
-      allPosts.push(...data);
+      allPosts = allPosts.concat(data)
       page = nextPage;
     }
 
