@@ -1,96 +1,102 @@
-const ButterCMS = require('buttercms');
 const camelCase = require('camelcase');
+const FetchButterCMSData = require('./fetch');
 
 class ButterSource {
   static defaultOptions() {
     return {
-      authToken: process.env.GRIDSOME_BUTTER_AUTHTOKEN || process.env.BUTTER_AUTHTOKEN,
+      authToken:
+        process.env.GRIDSOME_BUTTER_AUTHTOKEN || process.env.BUTTER_AUTHTOKEN,
       collections: [''],
-      pages: '',
-      pageTypes: '',
-      typeName: 'Butter'
+      pageTypes: [],
+      typeName: 'Butter',
+      locales: [],
+      preview: false,
+      levels: 2,
+      page_size: 100
     };
   }
 
   constructor(api, options = ButterSource.defaultOptions()) {
-    this.api = api;
     this.options = options;
-    this.client = ButterCMS(options.authToken, false, 20000);
-    if (!options.authToken) throw new Error('ButterSource: Missing API Key');
+    this.api = api;
+    this.fetchButterCMSData = new FetchButterCMSData(this.options);
 
     api.loadSource(async actions => {
-      console.log('Processing data...');
-      await this.allButterPosts(actions);
-      await this.allButterCollections(actions);
-      await this.allButterPages(actions);
+      const promises = [
+        this.createNodesForButterPosts(actions),
+        this.createNodesForButterPages(actions)
+      ];
+
+      if (this.options.collections && this.options.collections.length) {
+        promises.push(this.createNodesForButterCollections(actions));
+      }
+
+      try {
+        await Promise.all(promises);
+      } catch (e) {
+        console.error('Failed to create all nodes.');
+        console.error(e);
+      }
     });
   }
 
-    /****************************************************
+  /****************************************************
     STEP ONE: Get all butter posts
   ****************************************************/
-  async allButterPosts(actions) {
-    const post = await this.client.post.list()
-    const  { data } = post.data;
+  async createNodesForButterPosts(actions) {
+    const posts = await this.fetchButterCMSData.getBlogPosts();
+
     const contentType = actions.addCollection({
-      typeName: this.createTypeName("posts")
+      typeName: this.createTypeName('posts')
     });
-    for (const item of data) {
-      contentType.addNode({
-        ...item
-      });
-    }
+
+    posts.forEach(post => contentType.addNode(post));
   }
 
   /****************************************************
     STEP TWO: Get all butter collections
   ****************************************************/
-  async allButterCollections(actions) {
-    const collection = await this.client.content.retrieve(this.options.collections)
-    const { data } = collection.data;
+  async createNodesForButterCollections(actions) {
+    const data = await this.fetchButterCMSData.getCollectionsData(
+      this.options.collections
+    );
+
     const contentType = actions.addCollection({
       typeName: this.createTypeName('collection')
     });
+
     contentType.addNode({
       data
-    })
+    });
   }
 
   /****************************************************
     STEP THREE: Get all butter pages
   ****************************************************/
-  async allButterPages(actions) {
-    if (this.options.pages || this.options.pageTypes) {
-      if (this.options.pages) {
-        const page = await this.client.page.retrieve('*', this.options.pages)
-        const { data } = page.data;
+  createNodesForButterPages(actions) {
+    return Promise.all(
+      [...this.options.pageTypes, '*'].map(async pageType => {
+        const pages = await this.fetchButterCMSData.getPagesWithPageType(
+          pageType
+        );
         const contentType = actions.addCollection({
-          typeName: this.createTypeName('pages')
+          typeName: this.createTypeName(pageType === '*' ? 'pages' : pageType)
         });
-        contentType.addNode({
-          slug: data.slug,
-          page_type: data.page_type,
-          data: data.fields
-        })
-      }
-      if (this.options.pageTypes) {
-        const page = await this.client.page.list(this.options.pageTypes)
-        const { data } = page.data;
-        const pageTypeName = data.map(pages => {
-          return pages.page_type
-        })
-         const contentType = actions.addCollection({
-          typeName: this.createTypeName(pageTypeName[0])
-        });
-        for (const item of data) {
+
+        pages.forEach(page => {
+          // remove `fields` as a key from page so it doesn't get added to node
+          // needs to be renamed to `data` for use
+          const { fields: data, ...pageData } = page;
+          // create node
+          // - by assigning `page_type` explicitly here, we overwrite `pageData.page_type`
           contentType.addNode({
-            slug: item.slug,
-            page_type: item.page_type,
-            data: item.fields
-          })
-        }
-      }
-    }
+            ...pageData,
+            data,
+            page_type: page.page_type || '*'
+          });
+        });
+      })
+    );
   }
 
   createTypeName(typeName = '') {
