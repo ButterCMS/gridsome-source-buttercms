@@ -36,7 +36,7 @@ class FetchButterCMSData {
         data,
         meta: { next_page: nextPage }
       } = posts.data;
-      allPosts = allPosts.concat(data)
+      allPosts = allPosts.concat(data);
       page = nextPage;
     }
 

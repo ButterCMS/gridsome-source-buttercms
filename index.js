@@ -6,7 +6,7 @@ class ButterSource {
     return {
       authToken:
         process.env.GRIDSOME_BUTTER_AUTHTOKEN || process.env.BUTTER_AUTHTOKEN,
-      collections: [''],
+      collections: [],
       pageTypes: [],
       typeName: 'Butter',
       locales: [],
