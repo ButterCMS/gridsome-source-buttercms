@@ -3,6 +3,24 @@
 
 This is a guide to using ButterCMS as a [gridsome cms](https://buttercms.com/gridsome-cms/) and [blog engine](https://buttercms.com/gridsome-blog-engine/). It will walk you through what to add to a basic gridsome project to enable ButterCMS, how to add some content to display to ButterCMS, and what Vue components you’ll need to display that content.
 
+## Important Notice
+This project was created as an example use case of ButterCMS in conjunction with a blog article, [How to Build a Plugin with Gridsome](https://buttercms.com/blog/how-to-build-a-plugin-with-gridsome/), and will not be actively maintained. 
+
+If you’re interested in exploring the best, most up-to-date way to integrate Butter into javascript frameworks like Gridsome, you can check out the following resources:
+
+### Starter Projects
+
+The following turn-key starters are fully integrated with dynamic sample content from your ButterCMS account, including main menu, pages, blog posts, categories, and tags, all with a beautiful, custom theme with already-implemented search functionality. All of the included sample content is automatically created in your account dashboard when you sign up for a free trial of ButterCMS.
+- [Angular Starter](https://buttercms.com/starters/angular-starter-project/)
+- [React Starter](https://buttercms.com/starters/react-starter-project/)
+- [Vue.js Starter](https://buttercms.com/starters/vuejs-starter-project/)
+- Or see a list of all our [currently-maintained starters](https://buttercms.com/starters/). (Over a dozen and counting!)
+
+### Other Resources
+- Check out the [official ButterCMS Docs](https://buttercms.com/docs/)
+- Check out the [official ButterCMS API docs](https://buttercms.com/docs/api/)
+
+
 
 ## The TL;DR version:
 
